@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, Sluggable;
 
     // Perintah laravel untuk mendeklarasikan yang boleh di isi ke dalam database.
     // protected $fillable = ['title', 'excerpt', 'author', 'body'];
@@ -64,5 +65,14 @@ class Post extends Model
     public function getRouteKeyName() // Function untuk membuat route bukan membaca id melainkan slug
     {
         return 'slug';
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 }
