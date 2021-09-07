@@ -57,14 +57,14 @@
         const slug = document.querySelector('#slug');
 
         title.addEventListener('change', function(){
-            fetch('/dashboard/posts/checkSlug?title=' + title.value)
+            fetch('/dashboard/posts/check?title=' + title.value)
                 .then(response => response.json())
-                .then(data => slug.value data.slug)
+                .then(data => console.log(slug.value = data.slug))
         });
 
         document.addEventListener('trix-file-accept', function(e) {
             e.preventDefault;
-        }
+        });
     </script>
     
 @endsection
