@@ -43,14 +43,19 @@ class DashboardPostController extends Controller
     public function store(Request $request)
     {
         // ddd($request); // artinya die dump debug untuk mengecek pengiriman data yang terjadi. hampir sama seperti vardump mungkin.
-        return $request->file('image')->store('post-images'); // perintah untuk menyimpan file apapun karena belum kita tentukan jenis file yang boleh masuk, untuk kemudian dikirimkan ke dalam folder "post-images" fungsi ini juga akan mengembalikan path.
+        // return $request->file('image')->store('post-images'); // perintah untuk menyimpan file apapun karena belum kita tentukan jenis file yang boleh masuk, untuk kemudian dikirimkan ke dalam folder "post-images" fungsi ini juga akan mengembalikan path.
 
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'slug' => 'required|unique:posts',
             'category_id' => 'required',
+            'image' => 'image|file|max:1024',
             'body' => 'required'
         ]);
+
+        if ($request->file('image')) {
+            $validatedData['image'] = $request->file('image')->store('post-images');
+        }
 
         $validatedData['user_id'] = auth()->user()->id;
         $validatedData['excerpt'] = Str::limit(strip_tags($request->body), 200);
