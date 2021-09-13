@@ -67,7 +67,7 @@ class Post extends Model
         return 'slug';
     }
 
-    public function sluggable(): array
+    public function sluggable(): array // function untuk membuat slug otomatis dengan menggunakan package tambahan.
     {
         return [
             'slug' => [
